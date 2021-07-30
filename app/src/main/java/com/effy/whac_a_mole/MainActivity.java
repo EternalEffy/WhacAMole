@@ -60,12 +60,12 @@ public class MainActivity extends Activity {
         your_best_score.setText("Your best score: "+b_score);
         start = findViewById(R.id.start);
         start.setOnClickListener(v -> {
-            setContentView(R.layout.game);
+            setContentView(R.layout.game);//переключаю на игровой экран
             field = (GridView) findViewById(R.id.field);
             scoreText = findViewById(R.id.score);
             timerText = (TextView) findViewById(R.id.timer);
-            generateField();
-            field.setOnItemClickListener((parent, view, position, id) -> {
+            generateField();//метод генирации игрового поля и установки счётчика
+            field.setOnItemClickListener((parent, view, position, id) -> {//если элемент GridView на который нажал игрок содержит единицу (суслика) то наращиваю счётчик очков
                 if(fieldsNumbers.get(position) == 1){
                     score++;
                     runOnUiThread(() -> scoreText.setText("SCORE: "+ score));
@@ -75,18 +75,18 @@ public class MainActivity extends Activity {
     }
 
     public void generateField(){
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timer.scheduleAtFixedRate(new TimerTask() {//каждые пол секунды генерирует новую позицию суслика
         @Override
             public void run() {
-                count++;
-                if(count%2 == 0){
+                count++;// количество генераций суслика
+                if(count%2 == 0){//каждые две генерации (что соотвествует 1 секунде) уменьшаю количество таймера на 1
                     time--;
                 }
                 fieldsNumbers.clear();
-                for(int i = 0;i<9;i++){
+                for(int i = 0;i<9;i++){//перед генерацией заполняю поле нулями
                     fieldsNumbers.add(0);
                 }
-                fieldsNumbers.set(rand.nextInt(8),1);
+                fieldsNumbers.set(rand.nextInt(8),1);//в случайно позиции от 0 до 8 генерирую одного суслика
                 runOnUiThread(() -> {
                     field.setAdapter(new FieldAdapter(MainActivity.this, fieldsNumbers));
                     timerText.setText(time+"");
@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
                 timer.purge();
                 time = 30;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1000);//небольшая задержка перед переходом на послеигровой экран
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

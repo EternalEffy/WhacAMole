@@ -13,7 +13,7 @@ public class FieldAdapter extends BaseAdapter {
 
     private Context сontext;
     private List<Integer> holes;
-    private Integer hole;
+    private int hole;
 
     public FieldAdapter(Context c, List<Integer> holes) {
         сontext = c;
@@ -48,7 +48,7 @@ public class FieldAdapter extends BaseAdapter {
             grid = (View) convertView;
         }
         ImageView imageView = (ImageView) grid.findViewById(R.id.hole);
-        imageView.setImageResource((hole==1)?R.drawable.mole_in_hole:R.drawable.hole);
+        imageView.setImageResource((hole==1)?R.drawable.mole_in_hole:R.drawable.hole);//если текущий элемент равен 0 то ставлю изображение без суслика, если 1 то с сусликом
         return grid;
     }
 }
