@@ -1,0 +1,2 @@
+rootProject.name = "Whac-A-Mole"
+include ':app'
