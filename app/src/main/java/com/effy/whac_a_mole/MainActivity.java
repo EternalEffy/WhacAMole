@@ -32,9 +32,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getActionBar().hide();
-        init();
-        load_data();
-        startGame();
+        init();//метод инициализации переменных
+        load_data();//загрузка из памяти лучшего счета в игре
+        startGame();//метод запуска стартового игрового экрана
     }
 
     public void init(){
@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
                 }
                 fieldsNumbers.set(rand.nextInt(8),1);//в случайно позиции от 0 до 8 генерирую одного суслика
                 runOnUiThread(() -> {
-                    field.setAdapter(new FieldAdapter(MainActivity.this, fieldsNumbers));
+                    field.setAdapter(new FieldAdapter(MainActivity.this, fieldsNumbers));//передаю в адаптер сгенерированный массив чисел
                     timerText.setText(time+"");
                 });
             if(time == 0) {
@@ -107,10 +107,10 @@ public class MainActivity extends Activity {
     }
 
     private void afterGame() {
-        setContentView(R.layout.after_game);
+        setContentView(R.layout.after_game);//переключаю на послеигровой экран
         your_score = findViewById(R.id.your_score);
         your_score.setText("YOUR SCORE: "+score);
-        if(score>b_score){
+        if(score>b_score){//если текущий результат лучше, чем последний лучший, то перезаписываю лучший результат
             b_score = score;
         }
         best_score = findViewById(R.id.best_score);
@@ -119,15 +119,15 @@ public class MainActivity extends Activity {
         play_again = findViewById(R.id.play_again);
         menu = findViewById(R.id.menu);
         menu.setOnClickListener(v -> {
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_main);//переключение на стартовый экран
                 startGame();
         });
-        play_again.setOnClickListener(v -> {
+        play_again.setOnClickListener(v -> {//быстрый запуск игры
             setContentView(R.layout.game);
             field = (GridView) findViewById(R.id.field);
             scoreText = findViewById(R.id.score);
             timerText = (TextView) findViewById(R.id.timer);
-            generateField();
+            generateField();//тот же метод генерации поля и запуска таймера
             field.setOnItemClickListener((parent, view, position, id) -> {
                 if(fieldsNumbers.get(position) == 1){
                     score++;
