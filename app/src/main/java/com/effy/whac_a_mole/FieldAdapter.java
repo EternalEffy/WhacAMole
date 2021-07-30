@@ -11,12 +11,12 @@ import java.util.List;
 
 public class FieldAdapter extends BaseAdapter {
 
-    private Context mContext;
+    private Context сontext;
     private List<Integer> holes;
     private Integer hole;
 
     public FieldAdapter(Context c, List<Integer> holes) {
-        mContext = c;
+        сontext = c;
         this.holes = holes;
     }
 
@@ -41,16 +41,14 @@ public class FieldAdapter extends BaseAdapter {
         hole = holes.get(position);
 
         if (convertView == null) {
-            grid = new View(mContext);
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            grid = new View(сontext);
+            LayoutInflater inflater = (LayoutInflater) сontext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             grid = inflater.inflate(R.layout.grid_item, parent, false);
         } else {
             grid = (View) convertView;
         }
         ImageView imageView = (ImageView) grid.findViewById(R.id.hole);
-        if(hole==1){
-            imageView.setImageResource(R.drawable.mole_in_hole);
-        }else imageView.setImageResource(R.drawable.hole);
+        imageView.setImageResource((hole==1)?R.drawable.mole_in_hole:R.drawable.hole);
         return grid;
     }
 }

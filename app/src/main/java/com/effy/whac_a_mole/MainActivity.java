@@ -17,21 +17,33 @@ import java.util.TimerTask;
 
 public class MainActivity extends Activity {
 
-    Button start,play_again,menu;
-    GridView field;
-    int score,time = 30,count = 0,b_score;
-    TextView scoreText,timerText,your_score,best_score,your_best_score;
-    List<Integer> fieldsNumbers = new ArrayList<>(8);
-    SharedPreferences data_app;
+    private Button start,play_again,menu;
+    private GridView field;
+    private int score,time,count,b_score;
+    private TextView scoreText,timerText,your_score,best_score,your_best_score;
+    private List<Integer> fieldsNumbers;
+    private SharedPreferences data_app;
+    private Timer timer;
+    private Random rand;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getActionBar().hide();
-        data_app = getSharedPreferences("APP_PREFERENCES", Context.MODE_PRIVATE);
+        init();
         load_data();
         startGame();
+    }
+
+    public void init(){
+        fieldsNumbers  = new ArrayList<>(8);
+        timer = new Timer();
+        rand = new Random();
+        data_app = getSharedPreferences("APP_PREFERENCES", Context.MODE_PRIVATE);
+        time = 30;
+        count = 0;
     }
 
     public void load_data(){
@@ -41,6 +53,7 @@ public class MainActivity extends Activity {
     public void save_data(){
         data_app.edit().putInt("best",b_score).apply();
     }
+
 
     public void startGame(){
         your_best_score = findViewById(R.id.your_best_score);
@@ -62,8 +75,6 @@ public class MainActivity extends Activity {
     }
 
     public void generateField(){
-        Timer timer = new Timer();
-        Random rand = new Random();
         timer.scheduleAtFixedRate(new TimerTask() {
         @Override
             public void run() {
